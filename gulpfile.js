@@ -13,7 +13,7 @@ const babel = require('gulp-babel');
 
 gulp.task('clean', function () {
 	return del([
-		'public',
+		'build',
 	]);
 });
 
@@ -29,21 +29,21 @@ gulp.task('bump', function(){
 gulp.task('copy', function () {
 	return gulp
 		.src(['package.json', 'src/**/*.js'])
-		.pipe(gulp.dest('public'));
+		.pipe(gulp.dest('build'));
 });
 
 /* global gulp */
 gulp.task('copyPackage', function () {
 	return gulp
 		.src(['package.json', 'src/index.js'])
-		.pipe(gulp.dest('public'));
+		.pipe(gulp.dest('build'));
 });
 
 /* global gulp */
 gulp.task('copyStatic', function () {
 	return gulp
 		.src(['static/index.html', 'static/manifest.json', 'static/favicon.ico'])
-		.pipe(gulp.dest('public'));
+		.pipe(gulp.dest('build'));
 });
 
 gulp.task('babel', function () {
@@ -51,13 +51,13 @@ gulp.task('babel', function () {
         .pipe(babel({
             presets: ['env']
         }))
-        .pipe(gulp.dest('public'))
+        .pipe(gulp.dest('build'))
 });
 
 // 	'parse deploy',
 gulp.task('server', shell.task(['nodemon index.js',], {cwd: '_server/'}))
-gulp.task('pull', shell.task(['git add . && git commit -am "auto gulp commit" && git pull',], {cwd: 'public/'}))
-// gulp.task('publish', shell.task(['npm publish'], {cwd: 'public/'}))
+gulp.task('pull', shell.task(['git add . && git commit -am "auto gulp commit" && git pull',], {cwd: 'build/'}))
+// gulp.task('publish', shell.task(['npm publish'], {cwd: 'build/'}))
 gulp.task('push', shell.task([`git add . && git commit -am "auto gulp commit" && git push origin master`]));
 gulp.task('domino', shell.task([`domino`]));
 
@@ -65,7 +65,7 @@ gulp.task('domino', shell.task([`domino`]));
 gulp.task('copy', function () {
 	return gulp
 		.src(['src/**/*'])
-		.pipe(gulp.dest('public'));
+		.pipe(gulp.dest('build'));
 });
 
 gulp.task('default', ['build']);
